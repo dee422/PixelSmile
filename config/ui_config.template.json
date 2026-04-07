@@ -1,0 +1,19 @@
+﻿{
+    "comfy_base_url":  "http://127.0.0.1:8188",
+    "api_workflow_path":  "workflow/qwen_image_edit_api.json",
+    "expression_library_path":  "expression_library/library.presets.cn.json",
+    "preset_file":  "config/ui_presets.json",
+    "album_dir":  "album",
+    "ui_host":  "127.0.0.1",
+    "ui_port":  7861,
+    "max_wait_sec":  600,
+    "node_ids":  {
+                     "load_image":  "129",
+                     "target_text_encode":  "113",
+                     "neutral_text_encode":  "248",
+                     "pixelsmile":  "249",
+                     "image_scale":  "241",
+                     "latent":  "119",
+                     "ksampler":  "133"
+                 }
+}

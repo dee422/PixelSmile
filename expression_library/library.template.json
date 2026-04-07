@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "neutral_prompt": "Edit the person to show a neutral expression",
+  "source": {
+    "generator": "manual",
+    "model": "n/a",
+    "image_count": 0
+  },
+  "expressions": [
+    {
+      "name": "happy",
+      "prompt": "Edit the person to show a happy expression",
+      "strength_hint": 1.0,
+      "sample_count": 12,
+      "avg_intensity": 0.63,
+      "tags": ["smile", "positive", "warm"],
+      "images": ["happy/001.png", "happy/002.png"]
+    },
+    {
+      "name": "neutral",
+      "prompt": "Edit the person to show a neutral expression",
+      "strength_hint": 0.2,
+      "sample_count": 10,
+      "avg_intensity": 0.15,
+      "tags": ["flat", "calm", "no_smile"],
+      "images": ["neutral/001.png", "neutral/002.png"]
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+﻿{
+  "version": "1.0",
+  "neutral_prompt": "Edit the person to show a neutral expression, relaxed face, no smile, calm eyes.",
+  "source": {
+    "generator": "builtin-presets",
+    "model": "manual",
+    "image_count": 0
+  },
+  "expressions": [
+    {
+      "name": "happy",
+      "prompt": "Edit the person to show a warm, natural smile with bright eyes and relaxed cheeks.",
+      "strength_hint": 1.0,
+      "sample_count": 0,
+      "avg_intensity": 0.65,
+      "tags": ["smile", "positive", "natural"],
+      "images": []
+    },
+    {
+      "name": "big_smile",
+      "prompt": "Edit the person to show a broad joyful smile, teeth visible, lifted cheeks, lively eyes.",
+      "strength_hint": 1.15,
+      "sample_count": 0,
+      "avg_intensity": 0.78,
+      "tags": ["smile", "teeth", "joyful"],
+      "images": []
+    },
+    {
+      "name": "neutral",
+      "prompt": "Edit the person to show a neutral expression, relaxed face, no smile, calm eyes.",
+      "strength_hint": 0.2,
+      "sample_count": 0,
+      "avg_intensity": 0.15,
+      "tags": ["neutral", "calm", "flat"],
+      "images": []
+    },
+    {
+      "name": "sad",
+      "prompt": "Edit the person to show a slightly sad expression, downturned mouth corners, softer eyes, subtle melancholy.",
+      "strength_hint": 0.95,
+      "sample_count": 0,
+      "avg_intensity": 0.55,
+      "tags": ["sad", "soft", "melancholy"],
+      "images": []
+    },
+    {
+      "name": "angry",
+      "prompt": "Edit the person to show an angry expression, lowered brows, tense jaw, focused intense eyes.",
+      "strength_hint": 1.1,
+      "sample_count": 0,
+      "avg_intensity": 0.72,
+      "tags": ["angry", "intense", "brow"],
+      "images": []
+    },
+    {
+      "name": "surprised",
+      "prompt": "Edit the person to show a surprised expression, raised eyebrows, widened eyes, slightly open mouth.",
+      "strength_hint": 1.1,
+      "sample_count": 0,
+      "avg_intensity": 0.74,
+      "tags": ["surprised", "wide_eyes", "raised_brows"],
+      "images": []
+    },
+    {
+      "name": "confident",
+      "prompt": "Edit the person to show a confident expression, slight smirk, steady gaze, composed face.",
+      "strength_hint": 0.9,
+      "sample_count": 0,
+      "avg_intensity": 0.52,
+      "tags": ["confident", "composed", "smirk"],
+      "images": []
+    },
+    {
+      "name": "thinking",
+      "prompt": "Edit the person to show a thoughtful expression, gently furrowed brows, focused eyes, subtle concentration.",
+      "strength_hint": 0.85,
+      "sample_count": 0,
+      "avg_intensity": 0.5,
+      "tags": ["thinking", "focus", "brows"],
+      "images": []
+    },
+    {
+      "name": "shy",
+      "prompt": "Edit the person to show a shy expression, soft smile, slightly averted gaze, gentle face tension.",
+      "strength_hint": 0.8,
+      "sample_count": 0,
+      "avg_intensity": 0.45,
+      "tags": ["shy", "soft", "averted_gaze"],
+      "images": []
+    },
+    {
+      "name": "laughing",
+      "prompt": "Edit the person to show a laughing expression, wide smile, squinting eyes, cheerful energetic mood.",
+      "strength_hint": 1.25,
+      "sample_count": 0,
+      "avg_intensity": 0.85,
+      "tags": ["laughing", "wide_smile", "cheerful"],
+      "images": []
+    }
+  ]
+}

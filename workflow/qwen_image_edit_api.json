@@ -1,0 +1,251 @@
+{
+  "112": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "113": {
+    "inputs": {
+      "prompt": "Edit the person to show a surprised expression, raised eyebrows, widened eyes, slightly open mouth.\n\n\n\n\n\n\n\n\n\n\n",
+      "clip": [
+        "257",
+        0
+      ],
+      "vae": [
+        "112",
+        0
+      ],
+      "image1": [
+        "241",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "文本编码（QwenImageEditPlus）"
+    }
+  },
+  "118": {
+    "inputs": {
+      "shift": 3.12,
+      "model": [
+        "251",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "采样算法（AuraFlow）"
+    }
+  },
+  "119": {
+    "inputs": {
+      "width": 768,
+      "height": 1152,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "空Latent图像（SD3）"
+    }
+  },
+  "120": {
+    "inputs": {
+      "samples": [
+        "133",
+        0
+      ],
+      "vae": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "129": {
+    "inputs": {
+      "image": "face3.webp"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "133": {
+    "inputs": {
+      "seed": 5442,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "res_multistep",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "118",
+        0
+      ],
+      "positive": [
+        "249",
+        0
+      ],
+      "negative": [
+        "231",
+        0
+      ],
+      "latent_image": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "134": {
+    "inputs": {
+      "images": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "164": {
+    "inputs": {
+      "images": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "预览图像"
+    }
+  },
+  "231": {
+    "inputs": {
+      "conditioning": [
+        "113",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "条件零化"
+    }
+  },
+  "241": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": 768,
+      "height": 1152,
+      "crop": "disabled",
+      "image": [
+        "129",
+        0
+      ]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "缩放图像"
+    }
+  },
+  "244": {
+    "inputs": {
+      "unet_name": "qwen\\Qwen-Image-Edit-2511-FP8_e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "248": {
+    "inputs": {
+      "prompt": "Edit the person to show a neutral expression, relaxed face, no smile, calm eyes.",
+      "clip": [
+        "257",
+        0
+      ],
+      "vae": [
+        "112",
+        0
+      ],
+      "image1": [
+        "241",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "_meta": {
+      "title": "文本编码（QwenImageEditPlus）"
+    }
+  },
+  "249": {
+    "inputs": {
+      "score": 0.55,
+      "method": "score_one_all",
+      "conditioning_target": [
+        "113",
+        0
+      ],
+      "conditioning_neutral": [
+        "248",
+        0
+      ]
+    },
+    "class_type": "PixelSmileConditioning",
+    "_meta": {
+      "title": "PixelSmile Conditioning Interpolation"
+    }
+  },
+  "250": {
+    "inputs": {
+      "lora_name": "qwen-edit\\PixelSmile-preview.safetensors",
+      "strength_model": 1,
+      "model": [
+        "244",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "251": {
+    "inputs": {
+      "lora_name": "qwen-edit\\Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "250",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "257": {
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "stable_diffusion",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "加载CLIP"
+    }
+  }
+}

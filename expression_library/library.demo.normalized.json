@@ -1,0 +1,26 @@
+﻿{
+  "version": "1.0",
+  "neutral_prompt": "Edit the person to show a neutral expression",
+  "source": {
+    "generator": "scripts/build_expression_library.py",
+    "model": "filename-heuristic",
+    "label_source": "filename",
+    "image_count": 2
+  },
+  "expressions": [
+    {
+      "name": "example",
+      "prompt": "Edit the person to show a example expression",
+      "strength_hint": 1.2,
+      "sample_count": 2,
+      "avg_intensity": 0.6,
+      "tags": [
+        "example"
+      ],
+      "images": [
+        "example1.png",
+        "example2.png"
+      ]
+    }
+  ]
+}

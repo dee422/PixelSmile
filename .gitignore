@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+album/
+temp/
+
+config/ui_presets.json
+
