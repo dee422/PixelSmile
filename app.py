@@ -791,7 +791,7 @@ def build_ui() -> gr.Blocks:
 
     with gr.Blocks(title="iChessGeek表情管理大师") as demo:
         if LOGO_UI.exists():
-            gr.Image(value=str(LOGO_UI), show_label=False, interactive=False, height=84)
+            gr.Image(value=str(LOGO_UI), show_label=False, interactive=False, height=260)
         gr.Markdown("## iChessGeek表情管理大师")
         gr.Markdown("亮点：历史相册浏览、分页翻阅、点击放大、重命名、删除。")
 
