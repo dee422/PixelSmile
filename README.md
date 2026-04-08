@@ -86,6 +86,10 @@
 浏览器打开：
 - `http://127.0.0.1:7861`
 
+## UI 界面预览
+
+![iChessGeek 表情管理大师 UI](UI.png)
+
 ## 表情库说明
 
 ### 内置预置库
@@ -140,3 +144,54 @@ UI 中使用“自定义表情”区域：
 - 主流程可跑通
 - 具备表情库、独立 UI、相册管理全链路
 - 后续可继续扩展：多图批量、导出 ZIP、审核流等
+
+## 新手快速上手（从 0 到可生成）
+
+如果你是第一次接触 ComfyUI，按下面最短路径操作：
+
+1. 安装 ComfyUI（Windows）
+- 下载 ComfyUI portable（NVIDIA 版本）并解压。
+- 启动 `run_nvidia_gpu.bat`，确认可打开 `http://127.0.0.1:8188`。
+
+2. 放置本插件
+- 将本项目放到 ComfyUI 的 `custom_nodes` 下，目录名建议：
+  - `ComfyUI/custom_nodes/ComfyUI-PixelSmile-Conditioning-Interpolation`
+- 重启 ComfyUI。
+
+3. 安装必需自定义节点（若工作流报“缺失节点包”）
+- `ComfyUI-GGUF`（用于 `CLIPLoader (GGUF)`）
+- 其他你工作流里提示缺失的节点包
+
+4. 放置模型文件（必须）
+- UNet、LoRA、VAE、GGUF 文本编码模型，需要放在 ComfyUI 对应模型目录。
+- 以 ComfyUI 节点下拉框“能选到文件”为准；如果下拉为空，说明目录不对或未重启。
+
+5. 准备 API 工作流
+- 在 ComfyUI 中导出 **API 格式** 工作流到：
+  - `workflow/qwen_image_edit_api.json`
+
+6. 启动本项目 UI
+- 双击：`run_pixelsmile_ui.bat`
+- 打开：`http://127.0.0.1:7861`
+
+7. 首次生成自检
+- 先开 ComfyUI，再开本项目 UI。
+- 上传一张图，选择一个表情，点击生成。
+- 若报连接失败（10061），通常是 ComfyUI 没启动或端口不对。
+
+## 依赖与运行前提
+
+- 操作系统：Windows 10/11
+- GPU：NVIDIA（已验证 3070 8GB 可跑）
+- Python：建议 3.10（本项目已按 `tts` 环境验证）
+- ComfyUI：建议使用 portable 版，避免环境冲突
+- 网络：首次下载模型/节点时需要联网
+
+## 常见部署坑（新手必看）
+
+- `Value not in list`：模型未放到正确目录，或 ComfyUI 未重启。
+- `Prompt has no outputs`：这是工作流缺输出节点提示，不是插件错误。
+- 端口占用 `10048`：8188 被占用，先关闭旧 ComfyUI 进程或换端口。
+- `mat1 and mat2 shapes cannot be multiplied`：模型组合不匹配（UNet/CLIP/VAE 版本不一致）。
+- 比例异常：同步设置 `ImageScale` 和 `Latent` 的宽高，并与输入图纵横比一致。
+
