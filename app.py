@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import copy
 import io
@@ -7,6 +7,7 @@ import random
 import re
 import shutil
 import traceback
+import zipfile
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -19,6 +20,8 @@ from comfy_client import ComfyClient, get_first_output_image, load_json
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / "config" / "ui_config.json"
 PRESET_PATH_DEFAULT = ROOT / "config" / "ui_presets.json"
+LOGO_FAVICON = ROOT / "logo.png"
+LOGO_UI = ROOT / "logo1.png"
 ALBUM_IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".bmp"}
 
 
@@ -453,6 +456,40 @@ def _batch_rename_current(
     return gallery, info + f"\n已批量重命名 {len(mapping)} 张图片。", page2, paths
 
 
+def _export_album_zip(album_name: str, only_favorites: bool) -> Tuple[str | None, str]:
+    try:
+        cfg = _load_config()
+        root = _album_root(cfg)
+        album = _sanitize_name(album_name, "")
+        if not album:
+            return None, "请先选择相册。"
+        album_dir = root / album
+        if not album_dir.exists():
+            return None, f"相册不存在: {album}"
+
+        files = _scan_album_images(album_dir)
+        if only_favorites:
+            favs = _load_favorites(album_dir)
+            files = [p for p in files if p.relative_to(album_dir).as_posix() in favs]
+        if not files:
+            return None, "没有可导出的图片。"
+
+        export_dir = root / "_exports"
+        export_dir.mkdir(parents=True, exist_ok=True)
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        suffix = "_favorites" if only_favorites else "_all"
+        zip_path = export_dir / f"{album}{suffix}_{ts}.zip"
+
+        with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for p in files:
+                arcname = p.relative_to(album_dir).as_posix()
+                zf.write(p, arcname=arcname)
+
+        return str(zip_path), f"导出完成: {zip_path}（共 {len(files)} 张）"
+    except Exception as exc:
+        return None, f"导出失败: {exc}\n\n{traceback.format_exc()}"
+
+
 def _run_single_core(
     image: Image.Image,
     expression_name: str,
@@ -753,6 +790,8 @@ def build_ui() -> gr.Blocks:
     albums = _list_albums(cfg)
 
     with gr.Blocks(title="iChessGeek表情管理大师") as demo:
+        if LOGO_UI.exists():
+            gr.Image(value=str(LOGO_UI), show_label=False, interactive=False, height=84)
         gr.Markdown("## iChessGeek表情管理大师")
         gr.Markdown("亮点：历史相册浏览、分页翻阅、点击放大、重命名、删除。")
 
@@ -819,6 +858,7 @@ def build_ui() -> gr.Blocks:
                     prev_page_btn = gr.Button("上一页")
                     next_page_btn = gr.Button("下一页")
                 album_info = gr.Textbox(label="相册信息", lines=2)
+                export_zip_file = gr.File(label="相册ZIP下载", interactive=False)
                 album_gallery = gr.Gallery(label="相册缩略图", columns=4, height=300)
                 selected_preview = gr.Image(type="pil", label="点击放大预览")
                 selected_path = gr.Textbox(label="选中文件", interactive=False)
@@ -832,6 +872,7 @@ def build_ui() -> gr.Blocks:
                 with gr.Row():
                     move_btn = gr.Button("移动到目标相册")
                     batch_rename_btn = gr.Button("按当前筛选批量重命名")
+                    export_zip_btn = gr.Button("导出相册ZIP")
 
         save_preset_btn.click(
             fn=_save_preset,
@@ -933,6 +974,11 @@ def build_ui() -> gr.Blocks:
             inputs=[album_dropdown, album_keyword, page_state, only_favorites, rename_prefix],
             outputs=[album_gallery, album_info, page_state, gallery_paths_state],
         )
+        export_zip_btn.click(
+            fn=_export_album_zip,
+            inputs=[album_dropdown, only_favorites],
+            outputs=[export_zip_file, logs],
+        )
 
     return demo
 
@@ -942,4 +988,5 @@ if __name__ == "__main__":
     host = str(cfg.get("ui_host", "127.0.0.1"))
     port = int(cfg.get("ui_port", 7861))
     app = build_ui()
-    app.launch(server_name=host, server_port=port)
+    favicon = str(LOGO_FAVICON) if LOGO_FAVICON.exists() else None
+    app.launch(server_name=host, server_port=port, favicon_path=favicon)
